@@ -68,6 +68,10 @@
             overflow: auto; 
 		}
 
+        #layout_table {
+            transform-origin: top left;
+        }
+
         #map_F {
             font-family: "Tahoma";
             font-weight:600;
@@ -121,7 +125,7 @@
             font-weight:100;
             font-size:15px;
             color: white;
-            width: 88%;
+            width: 97%;
             height: 10%;
             background-color: #1f487c;
             margin: 5%;
@@ -133,17 +137,12 @@
             border-color:#1f487c;
 		}
 	#static {
-            top: 88%; 
-            left: 50%; 
+            top: 97%; 
+            left: 0%; 
             position: absolute; 
-            width: 780%;
+            width: 98%;
             height: 3%;
             transform:scale(0.7);
-		}
-	#static_jpg {
-	
-            width: 100%;
-            height: 100%;
 		}
 
 		#map {
@@ -214,12 +213,12 @@
 </head>
 <body>
     <div id="other_page" style="" >
-        <div id="F3_button_O" style="" onclick="document.getElementById('other_page').style.display='none';document.getElementById('map').style.display='block'">
+        <div id="F3_button_O" style="" onclick="window.on3FClick()">
             3F
         </div>
-        <!--<iframe  id='iframe_O'src="http://192.168.6.113/web/web.html"></iframe>-->
+        <iframe  id='iframe_O'src="http://192.168.6.113/web/web.html"></iframe>
     </div>
-    <table style="height:100%;">
+    <table id="layout_table" style="height:100%;">
         <tr>
             <td>
     <div id="map_F" style="">
@@ -232,14 +231,11 @@
             3F
         </div>
         
-        <!--<div id="showstatus" style="">-->
-           <!-- &nbsp;&nbsp;&nbsp;NA: 45 <br>-->
-           <!-- &nbsp;&nbsp;&nbsp;Run: 1 <br>-->
-           <!-- &nbsp;&nbsp;&nbsp;Abnormal: 1 <br>-->
-        <!--</div>-->
-        <!--<div id='static'>-->
-            <!--<img id='static_jpg' scr="http://192.168.1.6:20001/static/images/static.jpg" >-->
-        <!--</div>-->
+        <div id="showstatus" style="">
+        </div>
+        <div id='static'>
+            <img id='static_jpg' scr="http://192.168.1.6:20001/static/images/static.jpg" >
+        </div>
     </div>
             </td>
             <td style="vertical-align: top;">
