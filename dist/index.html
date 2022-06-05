@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PAT Map</title>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="./libs/leaflet.css" />
+    <script src="./libs/leaflet-src.js"></script>
+    
+
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			margin: 0;
+			background:radial-gradient(circle farthest-corner at left,	#003D79,	#005AB5);
+			overflow: hidden; 
+		}
+
+
+
+
+        #other_page {
+			width: 100%;
+			height: 100%;
+            display:none;
+            overflow: hidden; 
+            
+		}
+        #iframe_O{
+			position: absolute; 
+            top: 2%; 
+            left: 0%; 
+            width: 100%; 
+            height: 100%; 
+            /* background-color: black;  */
+            z-index:1001; 
+            -moz-opacity: 0.8; 
+            opacity:.80; 
+            filter: alpha(opacity=88); 
+		}
+        #F3_button_O {
+			/* font-family: "Noto Sans","Microsoft JhengHei";
+            font-weight:600;
+            font-size:35px;
+			width: 89%;
+			height: 8%;
+            background-color: #D5E8D4;
+            margin: 5%;
+            text-align:center;
+            line-height: 150%;
+            border-style:solid;
+            border-color:black; */
+            
+            /* display: none;  */
+            font-family: "Tahoma";
+            font-weight:600;
+            font-size:20px;
+            line-height: 175%;
+            text-align:center;
+            position: absolute; 
+            top: -1%; 
+            left: 0.2%; 
+            width: 10%; 
+            height: 6%; 
+            background-color: #e0e0e6; 
+            z-index: 10002; 
+            overflow: auto; 
+		}
+
+        #map_F {
+            font-family: "Tahoma";
+            font-weight:600;
+            font-size:20px;
+			width: 160px;
+			height: 100%;
+            margin-left: 15px;
+            margin-right: 15px;
+            float: left;
+            border-width:1px;
+            border-style:dashed;
+            border-color:transparent;
+            /* background:radial-gradient(circle farthest-corner at left,	#003D79,	#005AB5); */
+		}
+
+        #showbox {
+            color: white;
+            height: 48px;
+            margin-top: 15px;
+            padding-top:10px;
+            padding-bottom:10px;
+            
+            background:linear-gradient(#ffffff,#000000);
+            
+            line-height:100%;
+
+            text-align: center;
+		}
+
+        #other_button {
+			height: 48px;
+            line-height: 48px;
+            background-color: #ddd;
+            text-align: center;
+		}
+
+        #F3_button {
+            color: white;
+			height: 48px;
+            line-height: 48px;
+            background-color: 	#1f487c;
+            padding-top:5%;
+            border-style:solid;
+            border-color:#1f487c;
+            text-align: center;
+		}
+
+
+	#showstatus {
+            font-family: "Tahoma";
+            font-weight:100;
+            font-size:15px;
+            color: white;
+            width: 88%;
+            height: 10%;
+            background-color: #1f487c;
+            margin: 5%;
+            margin-top: 0%;
+            margin-bottom: 0%;
+            line-height:120%;
+            padding-top:0%;
+            border-style:solid;
+            border-color:#1f487c;
+		}
+	#static {
+            top: 88%; 
+            left: 50%; 
+            position: absolute; 
+            width: 780%;
+            height: 3%;
+            transform:scale(0.7);
+		}
+	#static_jpg {
+	
+            width: 100%;
+            height: 100%;
+		}
+
+		#map {
+			width: 1004px;
+			height: 664px;
+            margin-top: 14px;
+            transform: scale(1.2);
+            transform-origin: top left;
+            background-color: transparent;
+		}
+		.tooltipclass {
+			background: transparent;
+			border: transparent;
+			box-shadow: 0 0px 0px rgba(0,0,0,0);
+			
+		}
+        .centerInfo {
+            width:330px;
+            height:300px;
+            /* height:150px; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -250px 0 0 -165px;
+            z-index: 2147483647;
+            /* background-color: rgba(255, 240, 197, 1);
+            border-radius: 25px;
+            border-style: solid; */
+            border-color: rgba(208, 173, 76, 1);
+            visibility: hidden;
+            
+        }
+        .centerInfoInner {
+            width: 300;
+            margin: 15px;
+            background-color: rgba(255, 255, 197, 1);
+            /* border-radius: 25px; */
+            border-style: none;
+            border-color: rgba(145, 144, 144, 1);
+            font-family: "Tahoma";
+            
+        }
+        
+        #centerChangeLocal {
+            width:800px;
+            height:150px;
+            /* height:150px; */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -150px 0 0 -400px;
+            z-index: 2147483647;
+            border-style: none;
+            /* background-color: rgba(255, 255, 197, 1); */
+            /* border-color: rgba(145, 144, 144, 1); */
+            font-family: "Tahoma";
+            visibility: hidden;
+            
+        }
+        
+        .centerInfoInnerTitle {
+            width: 100%;
+            display: inline-block;
+            text-align: center;
+        }
+	</style>
+	<script defer src="main.js"></script><script defer src="main.js"></script></head>
+</head>
+<body>
+    <div id="other_page" style="" >
+        <div id="F3_button_O" style="" onclick="document.getElementById('other_page').style.display='none';document.getElementById('map').style.display='block'">
+            3F
+        </div>
+        <!--<iframe  id='iframe_O'src="http://192.168.6.113/web/web.html"></iframe>-->
+    </div>
+    <table style="height:100%;">
+        <tr>
+            <td>
+    <div id="map_F" style="">
+        <div id="showbox" style="">
+        </div>
+        <div id="other_button" style="" onclick="document.getElementById('other_page').style.display='block';document.getElementById('map').style.display='none'">
+            Others
+        </div>
+        <div id="F3_button" style="">
+            3F
+        </div>
+        
+        <!--<div id="showstatus" style="">-->
+           <!-- &nbsp;&nbsp;&nbsp;NA: 45 <br>-->
+           <!-- &nbsp;&nbsp;&nbsp;Run: 1 <br>-->
+           <!-- &nbsp;&nbsp;&nbsp;Abnormal: 1 <br>-->
+        <!--</div>-->
+        <!--<div id='static'>-->
+            <!--<img id='static_jpg' scr="http://192.168.1.6:20001/static/images/static.jpg" >-->
+        <!--</div>-->
+    </div>
+            </td>
+            <td style="vertical-align: top;">
+    <div id="map">
+    </div>
+    <div id="info" class="centerInfo">
+        <div class="centerInfoInner">
+            <label id="infoTitle" class="centerInfoInnerTitle">Title</label>
+            <pre id="infoContent">
+            </pre>
+        </div>
+    </div>
+    
+    <div id="centerChangeLocal" style="">
+        <div style="background-color: #ffffff;">
+            <table style="height:100%;width:100%;margin:0;font-family: 'Helvetica';" border="0">
+                <thead style="height:10%;background-color: #1f487c;">
+                    <tr>
+                        <th style="color: white;">機台位置對應設定</th>
+                    </tr>
+                </thead>
+                <tbody style="height:90%;background-color: #f0f0f0;">
+                    <tr>
+                        <th>
+                            <div style="height:98%;width:96%;margin:1% 2% 1% 2%;background-color:#ffffff;padding-top:1px;">
+                                
+                                <table style="height:98%;width:96%;margin:1% 2% 0% 2%;border:1px solid black;border-collapse:collapse;font-family: 'Helvetica';font-weight:200;font-size:5px;" RULES=ALL cellpadding="5">
+                                    <tr>
+                                        <td >Floor</td>
+                                        <td>Order</td>
+                                        <td>Equipment No.</td>
+                                        <td>Equipment No. (new)</td>
+                                        <td style="color:black;">置換</td>
+                                        <td>Entity No.</td>
+                                        <td>Entity No. (new)</td>
+                                        <td style="color:black;">置換</td>
+                                    </tr>
+                                    <tr style="margin:5% 5% 5% 5%;">
+                                        <td>3</th>
+                                        <td id="Order">1</td>
+                                        <td id="Equip">SC-01</td>
+                                        <td><input id="Equip_change" style="height:75%;width:80%;margin:0;" type="text" placeholder="Enter text"></td>
+                                        <td><button style="height:95%;width:95%;margin:0;background:linear-gradient(#ffffff,#1f487c);border-radius: 5px;font-family: 'Helvetica';font-weight:300;font-size:4px;" onclick="getElementById('Equip').innerHTML = getElementById('Equip_change').value">確定</button></td>
+                                        <td id="Entity">CRH-25</td>
+                                        <td><input id="Entity_change" style="height:75%;width:80%;margin:0;" type="text" placeholder="Enter text"></td>
+                                        <td><button style="height:95%;width:95%;margin:0;background:linear-gradient(#ffffff,#1f487c);border-radius: 5px;font-family: 'Helvetica';font-weight:300;font-size:4px;" onclick="getElementById('Entity').innerHTML = getElementById('Entity_change').value">確定</button></td>
+                                    </tr>
+                                </table>
+                                <table style="height:100%;width:100%;margin:0;">
+                                    <tr>
+                                        <th><button style="height:100%;width:95%;margin:2.5%;background:linear-gradient(#ffffff,#1f487c);border-radius: 5px;" onclick="change_button()">確定</button></th>
+                                        <th><button style="height:100%;width:95%;margin:2.5%;background:linear-gradient(#ffffff,#1f487c);border-radius: 5px;" onclick="getElementById('centerChangeLocal').style.visibility = 'hidden'">取消</button></th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+                                        </td></tr></table>
+    
+</body>
+</html>
+
