@@ -61,7 +61,7 @@
             position: absolute; 
             top: -1%; 
             left: 0.2%; 
-            width: 10%; 
+            width: 8%; 
             height: 6%; 
             background-color: #e0e0e6; 
             z-index: 10002; 
@@ -136,19 +136,12 @@
             border-style:solid;
             border-color:#1f487c;
 		}
-	#static {
-            top: 97%; 
-            left: 0%; 
-            position: absolute; 
-            width: 98%;
-            height: 3%;
-            transform:scale(0.7);
-		}
 
 		#map {
 			width: 1004px;
 			height: 664px;
             margin-top: 14px;
+            transform: scale(1.2);
             transform-origin: top left;
             background-color: transparent;
 		}
@@ -215,25 +208,19 @@
         <div id="F3_button_O" style="" onclick="window.on3FClick()">
             3F
         </div>
-        <iframe  id='iframe_O'src="http://192.168.6.113/web/web.html"></iframe>
+        <!--<iframe  id='iframe_O'src="http://192.168.6.113/web/web.html"></iframe>-->
     </div>
-    <table id="layout_table" style="height:100%;">
+    <table id="layout_table" style="width:1490px;height:880px;">
         <tr>
-            <td>
+            <td id="td_map_F">
     <div id="map_F" style="">
         <div id="showbox" style="">
         </div>
-        <div id="other_button" style="" onclick="document.getElementById('other_page').style.display='block';document.getElementById('map').style.display='none'">
+        <div id="other_button" style="" onclick="TFM.map.remove(); document.getElementById('other_page').style.display='block';document.getElementById('map').style.display='none'">
             Others
         </div>
         <div id="F3_button" style="">
             3F
-        </div>
-        
-        <div id="showstatus" style="">
-        </div>
-        <div id='static'>
-            <img id='static_jpg' scr="http://192.168.1.6:20001/static/images/static.jpg" >
         </div>
     </div>
             </td>
@@ -296,7 +283,13 @@
             </table>
         </div>
     </div>
-                                        </td></tr></table>
+                                        </td></tr>
+                                        <tr style="height:50px;">
+                                            <td></td>
+                                            <td style="text-align:right;"><img style="width: 1000px; margin-right: 45px;" src="libs/static.png" /></td>
+                                        </tr>
+
+    </table>
     
 </body>
 </html>
